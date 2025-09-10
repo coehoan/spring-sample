@@ -1,0 +1,125 @@
+/* 공통 레이아웃 */
+body {
+    font-family: "Noto Sans KR", Arial, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 28px;
+    color: #2c3e50;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* 중앙 정렬된 카드 레이아웃 */
+form, .card {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 25px 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* 폼 입력 필드 */
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* 버튼 */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #3498db;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+button:hover {
+    background: #2980b9;
+}
+
+/* 에러 메시지 */
+div .error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* 알림 메시지 */
+.message {
+    max-width: 400px;
+    margin: 15px auto;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+}
+.message.success {
+    background: #eafaf1;
+    color: #27ae60;
+}
+.message.error {
+    background: #fdecea;
+    color: #e74c3c;
+}
+.message.info {
+    background: #ebf5fb;
+    color: #2980b9;
+}
+
+/* 마이페이지 카드 */
+.mypage-card {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.mypage-card ul {
+    list-style: none;
+    padding: 0;
+}
+.mypage-card li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+}
+.mypage-card li:last-child {
+    border-bottom: none;
+}
