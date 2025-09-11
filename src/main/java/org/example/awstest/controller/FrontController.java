@@ -26,13 +26,9 @@ public class FrontController {
 
     @GetMapping("/mypage")
     public String mypage(@AuthenticationPrincipal UserDetails principal, Model model) {
-        /* try {
-            User user = userService.findByUsername(principal.getUsername());
-            model.addAttribute("user", user);
-            return "mypage";
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException("세션 만료");
-        } */
+        if (principal == null) {
+            return "redirect:/login?expired";
+        }
 
         User user = userService.findByUsername(principal.getUsername());
         model.addAttribute("user", user);
