@@ -75,7 +75,7 @@ public class UserService implements UserDetailsService {
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalStateException("현재 사용자 정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("현재 사용자 정보를 찾을 수 없습니다."));
     }
 
     @Override
