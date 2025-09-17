@@ -6,23 +6,3 @@ server:
       charset: utf-8
     session:
       timeout: 30m
-
-spring:
-  thymeleaf:
-    prefix: classpath:templates/
-    suffix: .html
-    cache: false
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sample_db?serverTimezone=Asia/Seoul&tcpKeepAlive=true
-    username: sample_user
-    password: sample_password
-  jpa:
-    open-in-view: true
-    hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-    properties:
-      hibernate.format_sql: true
