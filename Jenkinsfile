@@ -26,16 +26,18 @@ pipeline {
                 sh 'docker build -t ${IMAGE} .'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                sh '(docker ps -a -q --filter name=^/${CONTAINER}\\$ | grep -q .) && docker rm -f ${CONTAINER} || true'
+                sh 'docker run -d --name ${CONTAINER} -p ${APP_PORT}:${APP_PORT} ${IMAGE}'
+            }
+        }
     }
 
     post {
-        always {
-            sh '(docker ps -q --filter name=^/cms-test$ | grep -q .) && docker rm -f cms-test || true'
-        }
-
         success {
             sh 'docker image prune -f || true'
-            sh 'docker container prune -f || true'
         }
     }
 }
