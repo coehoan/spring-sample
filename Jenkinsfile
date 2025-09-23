@@ -27,4 +27,15 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            sh '(docker ps -q --filter name=^/cms-test$ | grep -q .) && docker rm -f cms-test || true'
+        }
+
+        success {
+            sh 'docker image prune -f || true'
+            sh 'docker container prune -f || true'
+        }
+    }
 }
