@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    enviroment {
+        IMAGE = 'cms-app:latest'
+        CONTAINER = 'cms-test'
+        APP_PORT = '8080'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -12,6 +18,12 @@ pipeline {
             steps {
                 sh 'chmod +x gradlew'
                 sh './gradlew clean build -x test'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t ${IMAGE} .'
             }
         }
     }
