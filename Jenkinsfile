@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    enviroment {
+    environment {
         IMAGE = 'cms-app:latest'
         CONTAINER = 'cms-test'
         APP_PORT = '8080'
