@@ -52,17 +52,13 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sshagent(credentials: ['ec2']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no ${EC2_USER:-ec2-user}@${EC2_HOST} "
-                            set -e
-                            docker pull ${DOCKER_REPO}:${BUILD_NUMBER}
-                            (docker ps -a -q --filter name=^/${CONTAINER}\\$ | grep -q .) && docker rm -f ${CONTAINER} || true
-                            docker run -d --name ${CONTAINER} -p ${APP_PORT}:8080 ${DOCKER_REPO}:${BUILD_NUMBER}
-                            docker image prune -f || true
-                        "
-                    '''
-                }
+                sh '''
+                    set -e
+                    docker pull ${DOCKER_REPO}:${BUILD_NUMBER}
+                    (docker ps -a -q --filter name=^/${CONTAINER}\\$ | grep -q .) && docker rm -f ${CONTAINER} || true
+                    docker run -d --name ${CONTAINER} -p ${APP_PORT}:8080 ${DOCKER_REPO}:${BUILD_NUMBER}
+                    docker image prune -f || true
+                '''
             }
         }
     }
