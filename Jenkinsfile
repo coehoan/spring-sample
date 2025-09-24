@@ -58,6 +58,7 @@ pipeline {
                     (docker ps -a -q --filter name=^/${CONTAINER}\\$ | grep -q .) && docker rm -f ${CONTAINER} || true
                     docker run -d --name ${CONTAINER} -p ${APP_PORT}:8080 ${DOCKER_REPO}:${BUILD_NUMBER}
                     docker image prune -f || true
+                    docker images ${DOCKER_REPO} --format {{.Repository}}:{{.Tag}} | grep -v ':latest' | xargs -r docker rmi -f
                 '''
             }
         }
