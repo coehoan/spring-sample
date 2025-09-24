@@ -54,9 +54,15 @@ pipeline {
             steps {
                 sh '''
                     set -e
+                    
+                    export IMAGE_TAG=${BUILD_NUMBER}
+                    
                     docker pull ${DOCKER_REPO}:${BUILD_NUMBER}
+                    
                     (docker ps -a -q --filter name=^/${CONTAINER}\\$ | grep -q .) && docker rm -f ${CONTAINER} || true
-                    docker run -d --name ${CONTAINER} -p ${APP_PORT}:8080 ${DOCKER_REPO}:${BUILD_NUMBER}
+                    
+                    docker compose up -d --no-deps --force-recreate app
+                    
                     docker image prune -f || true
                     docker images ${DOCKER_REPO} --format {{.Repository}}:{{.Tag}} | grep -v ':latest' | xargs -r docker rmi -f
                 '''

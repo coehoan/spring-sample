@@ -1,0 +1,9 @@
+services:
+  app:
+    image: "${DOCKER_REPO}:${IMAGE_TAG}"
+    container_name: "${CONTAINER}"
+    ports:
+      - "${APP_PORT}:8080"
+    restart: always
+    env_file:
+      - .env
