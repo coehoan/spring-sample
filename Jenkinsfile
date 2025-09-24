@@ -36,11 +36,11 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(
                         credentialsId: 'coehoan-dockerhub',
-                        usernameVariable: 'U',
-                        passwordVariable: 'P'
+                        usernameVariable: 'username',
+                        passwordVariable: 'password'
                 )]) {
                     sh '''
-                        echo "$P" | docker login -u "$U" --password-stdin
+                        echo "$password" | docker login -u "$username" --password-stdin
                         docker push ${DOCKER_REPO}:${BUILD_NUMBER}
                         docker push ${DOCKER_REPO}:latest
                         docker logout || true
