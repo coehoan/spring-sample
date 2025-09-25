@@ -55,12 +55,11 @@ pipeline {
                 sh '''
                     set -e
                     
-                    export IMAGE_TAG=${BUILD_NUMBER}
-                    
                     docker pull ${DOCKER_REPO}:${BUILD_NUMBER}
                     
                     (docker ps -a -q --filter name=^/${CONTAINER}\\$ | grep -q .) && docker rm -f ${CONTAINER} || true
-                    
+                   
+                    export IMAGE_TAG=${BUILD_NUMBER}
                     docker compose up -d --no-deps --force-recreate app
                     
                     docker image prune -f || true
