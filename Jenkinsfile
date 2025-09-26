@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/coehoan/spring-sample.git', branch: 'master'
+            }
+        }
+
         stage('Load .env') {
             steps {
                 script {
@@ -10,12 +16,6 @@ pipeline {
                         env."${key}" = value
                     }
                 }
-            }
-        }
-
-        stage('Checkout') {
-            steps {
-                git url: 'https://github.com/coehoan/spring-sample.git', branch: 'master'
             }
         }
 
@@ -40,6 +40,7 @@ pipeline {
                         passwordVariable: 'password'
                 )]) {
                     sh '''
+                        set -e
                         echo "$password" | docker login -u "$username" --password-stdin
                         docker push ${DOCKER_REPO}:${BUILD_NUMBER}
                         docker push ${DOCKER_REPO}:latest
@@ -56,11 +57,11 @@ pipeline {
                     set -e
                     
                     docker pull ${DOCKER_REPO}:${BUILD_NUMBER}
-                    
-                    (docker ps -a -q --filter name=^/${CONTAINER}\\$ | grep -q .) && docker rm -f ${CONTAINER} || true
                    
                     export IMAGE_TAG=${BUILD_NUMBER}
                     docker compose up -d --no-deps --force-recreate app
+                    
+                    docker exec ${NGINX_CONTAINER} nginx -t && docker exec ${NGINX_CONTAINER} nginx -s reload || docker compose up -d nginx
                     
                     docker image prune -f || true
                     docker images ${DOCKER_REPO} --format {{.Repository}}:{{.Tag}} | grep -v ':latest' | xargs -r docker rmi -f

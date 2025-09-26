@@ -6,3 +6,4 @@ server:
       charset: utf-8
     session:
       timeout: 30m
+  forward-headers-strategy: native

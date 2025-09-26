@@ -1,9 +1,19 @@
 services:
   app:
     image: "${DOCKER_REPO}:${IMAGE_TAG}"
-    container_name: "${CONTAINER}"
-    ports:
-      - "${APP_PORT}:8080"
+    container_name: "${SERVER_CONTAINER}"
+    expose:
+      - "8080"
     restart: always
     env_file:
       - .env
+
+  nginx:
+    image: nginx
+    container_name: "${NGINX_CONTAINER}"
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
