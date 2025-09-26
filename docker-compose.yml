@@ -1,6 +1,6 @@
 services:
   app:
-    image: "${DOCKER_REPO}:${IMAGE_TAG}"
+    image: "${DOCKER_REPO}:latest"
     container_name: "${SERVER_CONTAINER}"
     expose:
       - "8080"
