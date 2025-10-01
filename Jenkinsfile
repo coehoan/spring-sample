@@ -61,8 +61,6 @@ pipeline {
                     export IMAGE_TAG=${BUILD_NUMBER}
                     docker compose up -d --no-deps --force-recreate app
                     
-                    docker exec ${NGINX_CONTAINER} nginx -t && docker exec ${NGINX_CONTAINER} nginx -s reload || docker compose up -d nginx
-                    
                     docker image prune -f || true
                     docker images ${DOCKER_REPO} --format {{.Repository}}:{{.Tag}} | grep -v ':latest' | xargs -r docker rmi -f
                 '''
